@@ -1,0 +1,494 @@
+/* ===========================================================
+   ALTONÉO — Outil interne "Choix d'outil & Facturation électronique"
+   Feuille de style commune — habillage charte graphique Altonéo
+   Jaune principal : #f9b233 (R249 V178 B51)
+   Bleu principal  : #1c284d (R28  V40  B77)
+   Police de substitution : Plus Jakarta Sans (Pangram non disponible en web font)
+   Mode clair uniquement.
+   =========================================================== */
+:root{
+  --jaune:#f9b233;
+  --jaune-fonce:#e89a1c;
+  --jaune-clair:#fde38d;
+  --bleu:#1c284d;
+  --bleu-clair:#2d519f;
+  --bleu-secondaire:#385697;
+  --rose:#e83a5d;
+  --orange:#f07f40;
+  --vert:#16ad92;
+  --gris-clair:#eaf0f7;
+
+  --bg:#f7f8fc;
+  --bg-2:#eef1f8;
+  --surface:#ffffff;
+  --surface-2:#f7f9fd;
+  --texte:#1c284d;
+  --texte-doux:#5b6a8a;
+  --bordure:#e2e7f2;
+  --ombre:0 10px 30px rgba(28,40,77,.10), 0 2px 6px rgba(28,40,77,.06);
+  --ombre-hover:0 18px 44px rgba(28,40,77,.18), 0 4px 10px rgba(28,40,77,.10);
+  --header-bg:rgba(255,255,255,.92);
+  --logo-ink:#1c284d;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{scroll-behavior:smooth}
+html{height:100%}
+body{
+  font-family:'Plus Jakarta Sans','Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--texte);
+  min-height:100vh;
+  line-height:1.55;
+  overflow-x:hidden;
+  display:flex;
+  flex-direction:column;
+}
+
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+button{font-family:inherit}
+
+/* ====================== ÉLÉMENTS GRAPHIQUES DE MARQUE ======================
+   Repris de la charte : la vague, la demi-vague, la sinusoïde, le losange,
+   l'accent, le sourire. Décoratifs, non interactifs.
+   ============================================================================ */
+.deco{pointer-events:none;display:block}
+.deco path,.deco circle,.deco rect{vector-effect:non-scaling-stroke}
+
+/* logo */
+.logo-altoneo{display:flex;align-items:center;gap:11px;cursor:pointer}
+.logo-sigle{display:block;flex:0 0 auto;width:38px;height:38px}
+.logo-texte{
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:21px;
+  letter-spacing:-.4px;color:var(--logo-ink);white-space:nowrap;
+}
+.logo-accent-mark{display:none;flex:0 0 auto;width:30px;height:16px;margin-left:1px}
+@media(min-width:880px){.logo-accent-mark{display:block}}
+
+/* ====================== EN-TÊTE ====================== */
+header{
+  position:sticky;top:0;z-index:50;
+  display:flex;align-items:center;gap:18px;
+  padding:14px 30px;
+  background:var(--header-bg);
+  backdrop-filter:saturate(160%) blur(12px);
+  border-bottom:1px solid var(--bordure);
+  flex-wrap:wrap;
+}
+.header-spacer{flex:1}
+.nav-principale{display:none;gap:6px;align-items:center}
+@media(min-width:880px){.nav-principale{display:flex}}
+.nav-principale a{
+  font-size:13.5px;font-weight:700;color:var(--texte-doux);
+  padding:9px 16px;border-radius:30px;transition:.2s;
+}
+.nav-principale a:hover{color:var(--bleu);background:var(--surface-2)}
+.nav-principale a.actif{background:var(--bleu);color:#fff}
+
+/* Nav mobile (menu burger simplifié -> liens sous le header) */
+.nav-mobile{display:flex;gap:8px;overflow-x:auto;padding:10px 18px 4px;border-bottom:1px solid var(--bordure);background:var(--surface)}
+@media(min-width:880px){.nav-mobile{display:none}}
+.nav-mobile a{
+  flex:0 0 auto;font-size:12.5px;font-weight:700;color:var(--texte-doux);
+  padding:7px 12px;border-radius:20px;background:var(--surface-2);border:1px solid var(--bordure);
+}
+.nav-mobile a.actif{background:var(--bleu);color:#fff;border-color:var(--bleu)}
+
+/* ====================== TRAME ====================== */
+main{max-width:1220px;margin:0 auto;padding:38px 28px 0;position:relative;flex:1;width:100%}
+.fil{
+  display:flex;align-items:center;gap:10px;
+  font-size:13px;color:var(--texte-doux);margin-bottom:22px;flex-wrap:wrap;
+}
+.fil a{cursor:pointer;font-weight:600}
+.fil a:hover{color:var(--jaune-fonce)}
+.fil .sep{opacity:.5}
+
+/* ---- Hero avec décor de marque (sinusoïde + demi-vague) ---- */
+.hero{
+  position:relative;overflow:hidden;
+  margin-bottom:30px;padding:38px 34px;border-radius:26px;
+  background:var(--surface);border:1px solid var(--bordure);box-shadow:var(--ombre);
+}
+.hero-rivage{position:absolute;top:-10%;right:-6%;width:62%;height:135%;opacity:.16;z-index:0}
+.hero-rivage.m1{color:var(--jaune)}
+.hero-rivage.m2{color:var(--bleu-clair)}
+.hero-rivage.m3{color:var(--bleu)}
+.hero-rivage.m4{color:var(--vert)}
+.hero-contenu{position:relative;z-index:1;max-width:760px}
+.hero h1{font-size:33px;font-weight:800;letter-spacing:-.5px;margin-bottom:6px}
+.hero h1 .accent{color:var(--jaune-fonce);position:relative;display:inline-block}
+.demi-vague-soulignee{display:block;width:104%;height:14px;margin:-2px 0 4px -2px;color:var(--jaune)}
+.hero p{color:var(--texte-doux);font-size:16px;max-width:740px;margin-top:8px}
+
+.bandeau-module{
+  position:relative;overflow:hidden;
+  display:flex;align-items:center;gap:16px;margin-bottom:26px;
+  padding:24px 28px;border-radius:22px;color:#fff;
+  box-shadow:var(--ombre);
+}
+.bandeau-module.m1{background:linear-gradient(120deg,var(--jaune),var(--jaune-fonce))}
+.bandeau-module.m2{background:linear-gradient(120deg,var(--bleu-clair),var(--bleu))}
+.bandeau-module.m3{background:linear-gradient(120deg,var(--bleu),var(--jaune-fonce))}
+.bandeau-module.m4{background:linear-gradient(120deg,var(--vert),#0e8c75)}
+.bandeau-module .b-ico{font-size:30px;background:rgba(255,255,255,.2);width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex:0 0 auto;position:relative;z-index:1}
+.bandeau-module h2{font-size:22px;font-weight:800;position:relative;z-index:1}
+.bandeau-module p{font-size:13.5px;opacity:.92;position:relative;z-index:1}
+.bandeau-module .rf{
+  margin-left:auto;flex:0 0 auto;background:rgba(0,0,0,.18);
+  font-size:11px;font-weight:800;letter-spacing:.5px;padding:6px 12px;border-radius:30px;
+  position:relative;z-index:1;
+}
+.bandeau-module .deco-sinusoide{position:absolute;right:-4%;top:-30%;width:46%;height:160%;opacity:.22;color:#fff;z-index:0}
+
+/* ====================== TUILES ACCUEIL ====================== */
+.tuiles{
+  display:grid;gap:24px;
+  grid-template-columns:repeat(auto-fit,minmax(290px,1fr));
+}
+.tuile{
+  position:relative;overflow:hidden;
+  background:var(--surface);
+  border:1px solid var(--bordure);
+  border-radius:22px;
+  padding:30px 28px 30px 40px;
+  cursor:pointer;
+  box-shadow:var(--ombre);
+  transition:transform .25s cubic-bezier(.2,.7,.3,1),box-shadow .25s;
+  min-height:240px;
+  display:flex;flex-direction:column;
+}
+.tuile:hover{transform:translateY(-7px);box-shadow:var(--ombre-hover)}
+.tuile::before{content:"";position:absolute;left:0;top:0;bottom:0;width:9px}
+.tuile.m1::before{background:linear-gradient(180deg,var(--jaune),var(--jaune-fonce))}
+.tuile.m2::before{background:linear-gradient(180deg,var(--bleu-clair),var(--bleu))}
+.tuile.m3::before{background:linear-gradient(180deg,var(--jaune),var(--bleu))}
+.tuile.m4::before{background:linear-gradient(180deg,var(--vert),#0e8c75)}
+
+.tuile .vague-coin{position:absolute;right:-18px;bottom:-22px;width:130px;height:90px;opacity:.10;z-index:0}
+.tuile.m1 .vague-coin{color:var(--jaune-fonce)}
+.tuile.m2 .vague-coin{color:var(--bleu-clair)}
+.tuile.m3 .vague-coin{color:var(--bleu)}
+.tuile.m4 .vague-coin{color:var(--vert)}
+
+.tuile .ico{
+  width:58px;height:58px;border-radius:16px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:28px;margin-bottom:18px;position:relative;z-index:1;
+}
+.tuile.m1 .ico{background:rgba(249,178,51,.16);color:var(--jaune-fonce)}
+.tuile.m2 .ico{background:rgba(45,81,159,.14);color:var(--bleu-clair)}
+.tuile.m3 .ico{background:linear-gradient(135deg,rgba(249,178,51,.18),rgba(45,81,159,.18));color:var(--bleu)}
+.tuile.m4 .ico{background:rgba(22,173,146,.16);color:var(--vert)}
+
+.tuile .num{position:absolute;top:22px;right:26px;font-size:52px;font-weight:800;opacity:.08;color:var(--texte)}
+.tuile .rf-tag{
+  position:absolute;top:24px;right:24px;font-size:10.5px;font-weight:800;letter-spacing:.5px;
+  color:var(--texte-doux);background:var(--surface-2);border:1px solid var(--bordure);
+  padding:3px 9px;border-radius:20px;z-index:1;
+}
+.losange-deco{position:absolute;top:26px;right:26px;width:13px;height:13px;z-index:1}
+.tuile.m1 .losange-deco{color:var(--jaune-fonce)}
+.tuile.m2 .losange-deco{color:var(--bleu-clair)}
+.tuile.m3 .losange-deco{color:var(--bleu)}
+.tuile.m4 .losange-deco{color:var(--vert)}
+.tuile h3{font-size:20px;font-weight:800;margin-bottom:8px;position:relative;z-index:1}
+.tuile p{font-size:14px;color:var(--texte-doux);flex:1;position:relative;z-index:1}
+.tuile .cta{margin-top:16px;font-weight:700;font-size:14px;color:var(--jaune-fonce);display:flex;align-items:center;gap:6px;position:relative;z-index:1}
+.tuile .cta .fl{transition:transform .2s}
+.tuile:hover .cta .fl{transform:translateX(5px)}
+
+.bloc-aide{
+  position:relative;overflow:hidden;
+  margin-top:42px;margin-bottom:54px;background:var(--surface);border:1px solid var(--bordure);border-radius:20px;
+  padding:24px 28px;box-shadow:var(--ombre);display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap;
+}
+.bloc-aide .ico{font-size:26px}
+.bloc-aide h4{font-size:15.5px;margin-bottom:5px;display:flex;align-items:center;gap:8px}
+.bloc-aide p{font-size:13.5px;color:var(--texte-doux);max-width:740px}
+.bloc-aide .sourire-deco{position:absolute;right:18px;bottom:14px;width:54px;height:26px;color:var(--jaune);opacity:.5}
+
+/* ====================== CARTES GÉNÉRIQUES ====================== */
+.carte{
+  background:var(--surface);border:1px solid var(--bordure);
+  border-radius:18px;padding:24px;box-shadow:var(--ombre);margin-bottom:22px;
+}
+.carte h4{font-size:17px;font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:9px}
+
+/* ====================== BOUTONS ====================== */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  padding:11px 16px;border-radius:13px;font-weight:700;font-size:13.5px;
+  cursor:pointer;border:none;text-decoration:none;transition:.2s;
+}
+.btn-jaune{background:var(--jaune);color:var(--bleu)}
+.btn-jaune:hover{background:var(--jaune-fonce);transform:translateY(-1px)}
+.btn-bleu{background:var(--bleu);color:#fff}
+.btn-bleu:hover{transform:translateY(-1px);filter:brightness(1.08)}
+.btn-ligne{background:transparent;border:1.5px solid var(--bordure);color:var(--texte)}
+.btn-ligne:hover{border-color:var(--jaune);color:var(--jaune-fonce)}
+.btn[disabled]{opacity:.5;cursor:not-allowed;pointer-events:none}
+.btn-petit{padding:7px 12px;font-size:12px;border-radius:9px}
+
+/* Bouton vidéo "conseil du spécialiste" + mascotte */
+.conseil{display:flex;align-items:center;gap:11px;background:rgba(249,178,51,.12);border:1.5px dashed var(--jaune);border-radius:13px;padding:9px 12px;cursor:pointer;transition:.2s}
+.conseil:hover{background:rgba(249,178,51,.22)}
+.mascotte{width:40px;height:40px;border-radius:12px;flex:0 0 auto;position:relative;background:linear-gradient(160deg,#2d519f,#1c284d);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(28,40,77,.35)}
+.mascotte::after{content:"🤖";font-size:20px}
+.conseil .txt{font-size:13px;font-weight:700;color:var(--bleu)}
+.conseil .txt small{display:block;font-weight:600;color:var(--texte-doux);font-size:11px}
+
+/* ====================== FORMULAIRES ====================== */
+.select,.input{
+  width:100%;padding:12px 14px;border-radius:12px;
+  border:1.5px solid var(--bordure);background:var(--surface-2);
+  color:var(--texte);font-size:14.5px;font-family:inherit;
+}
+.select:focus,.input:focus{outline:none;border-color:var(--jaune)}
+label.lbl{font-size:13px;font-weight:700;color:var(--texte-doux);display:block;margin-bottom:7px}
+.grille-form{display:grid;gap:14px;grid-template-columns:1fr 1fr;align-items:end}
+@media(max-width:620px){.grille-form{grid-template-columns:1fr}}
+.note{font-size:12.5px;color:var(--texte-doux);background:var(--surface-2);border-left:3px solid var(--jaune);padding:10px 14px;border-radius:0 10px 10px 0;margin-top:14px}
+.import-zone{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:6px}
+
+/* Onglets */
+.tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.tab{padding:9px 18px;border-radius:30px;cursor:pointer;font-weight:700;font-size:13.5px;background:var(--surface);border:1px solid var(--bordure);color:var(--texte-doux);transition:.2s}
+.tab.actif{background:var(--bleu);color:#fff;border-color:var(--bleu)}
+.sous-ecran{display:none}
+.sous-ecran.actif{display:block;animation:fade .3s}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* Tableaux */
+table{width:100%;border-collapse:collapse;margin-top:8px;font-size:14px}
+th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--bordure)}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--texte-doux)}
+tr:hover td{background:var(--surface-2)}
+.del{cursor:pointer;color:#d9534f;font-weight:700;border:none;background:none;font-size:13px}
+
+/* Badges / tags */
+.badge{background:var(--jaune);color:var(--bleu);font-weight:800;font-size:11px;padding:3px 9px;border-radius:20px;letter-spacing:.4px}
+.badge.bleu{background:var(--bleu);color:#fff}
+.tag{font-size:11px;font-weight:700;color:var(--bleu-clair);background:rgba(45,81,159,.12);padding:3px 9px;border-radius:20px}
+.tag.vert{color:var(--vert);background:rgba(22,173,146,.14)}
+.tag.abo{color:var(--jaune-fonce);background:rgba(249,178,51,.16)}
+
+/* ====================== PIED DE PAGE (footer marque, fond bleu + vague) ====================== */
+.footer-altoneo{
+  --logo-ink:#ffffff;
+  position:relative;margin-top:54px;color:#fff;background:var(--bleu);
+  padding:46px 28px 26px;overflow:hidden;
+}
+.footer-vague{position:absolute;top:-1px;left:0;width:100%;height:54px;color:var(--bg);transform:translateY(-100%)}
+.footer-inner{max-width:1220px;margin:0 auto;display:flex;flex-direction:column;gap:14px;align-items:center;justify-content:center;position:relative;z-index:1;text-align:center}
+.footer-marque{display:flex;align-items:center;justify-content:center;gap:11px}
+.footer-texte{font-size:13px;color:rgba(255,255,255,.78);text-align:center}
+.footer-bas{max-width:1220px;margin:18px auto 0;padding-top:18px;border-top:1px solid rgba(255,255,255,.14);
+  font-size:12px;color:rgba(255,255,255,.6);text-align:center;position:relative;z-index:1}
+.pill-v{background:var(--jaune);color:var(--bleu);font-weight:800;padding:2px 9px;border-radius:20px;font-size:11px}
+
+/* Bandeau maquette */
+.maquette{
+  background:repeating-linear-gradient(45deg,rgba(249,178,51,.10),rgba(249,178,51,.10) 12px,transparent 12px,transparent 24px);
+  border:1px solid var(--jaune);border-radius:12px;padding:11px 16px;font-size:12.5px;color:var(--texte-doux);margin-bottom:24px;
+}
+.maquette b{color:var(--jaune-fonce)}
+
+.etapes{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));margin-top:26px}
+.etape{background:var(--surface-2);border:1px dashed var(--bordure);border-radius:14px;padding:18px}
+.etape .n{width:30px;height:30px;border-radius:50%;background:var(--jaune);color:var(--bleu);font-weight:800;display:flex;align-items:center;justify-content:center;margin-bottom:10px}
+.etape h5{font-size:14.5px;margin-bottom:5px}
+.etape p{font-size:12.5px;color:var(--texte-doux)}
+
+/* ====================== Offres / fiches (RF1, RF2, RF4) ====================== */
+.offres{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.offre{
+  background:var(--surface);border:1px solid var(--bordure);
+  border-radius:18px;overflow:hidden;box-shadow:var(--ombre);
+  display:flex;flex-direction:column;transition:.25s;
+}
+.offre:hover{transform:translateY(-5px);box-shadow:var(--ombre-hover)}
+.offre .top{
+  position:relative;overflow:hidden;
+  background:linear-gradient(120deg,var(--bleu),var(--bleu-clair));
+  color:#fff;padding:18px 20px;display:flex;align-items:center;gap:12px;
+}
+.offre .top h5{font-size:16.5px;font-weight:800;position:relative;z-index:1}
+.offre .top .badge{position:relative;z-index:1}
+.offre .top .vague-coin{position:absolute;right:-14px;bottom:-18px;width:90px;height:60px;opacity:.25;color:#fff;z-index:0}
+.offre .corps{padding:18px 20px;flex:1;display:flex;flex-direction:column;gap:10px}
+.offre .corps .marque-tag{font-size:11px;font-weight:800;letter-spacing:.5px;color:var(--texte-doux);text-transform:uppercase}
+.offre .corps .desc{font-size:13.5px;color:var(--texte-doux)}
+.offre .corps .tags{display:flex;gap:6px;flex-wrap:wrap}
+.offre .actions{padding:16px 20px;border-top:1px solid var(--bordure);display:flex;flex-direction:column;gap:10px}
+
+/* Barre de filtres RF2 */
+.barre-filtres{
+  display:grid;gap:14px;grid-template-columns:1.4fr 1fr 1fr auto;align-items:end;margin-bottom:8px;
+}
+@media(max-width:880px){.barre-filtres{grid-template-columns:1fr}}
+.case-abo{display:flex;align-items:center;gap:9px;font-size:13.5px;font-weight:700;color:var(--texte-doux);cursor:pointer;user-select:none;padding:11px 0}
+.case-abo input{width:18px;height:18px;accent-color:var(--jaune-fonce)}
+.compteur-resultats{font-size:13px;color:var(--texte-doux);margin:18px 2px 14px}
+.compteur-resultats b{color:var(--texte)}
+.vide-resultats{padding:40px 20px;text-align:center;color:var(--texte-doux);font-size:14px}
+
+/* Modale fiche détail */
+.modale-fond{
+  position:fixed;inset:0;background:rgba(17,22,43,.55);display:none;
+  align-items:center;justify-content:center;padding:24px;z-index:200;
+}
+.modale-fond.on{display:flex;animation:fade .2s}
+.modale-boite{
+  background:var(--surface);border-radius:20px;max-width:640px;width:100%;max-height:88vh;overflow:auto;
+  padding:30px 32px;position:relative;box-shadow:var(--ombre-hover);
+}
+.modale-fermer{position:absolute;top:18px;right:18px;background:var(--surface-2);border:1px solid var(--bordure);
+  width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:14px;color:var(--texte-doux)}
+.modale-boite .top{display:flex;gap:10px;align-items:center;margin-bottom:14px}
+.modale-boite .marque-tag{font-size:11px;font-weight:800;letter-spacing:.5px;color:var(--texte-doux);text-transform:uppercase}
+.modale-boite h3{font-size:23px;font-weight:800;margin-bottom:10px}
+.modale-boite .desc{font-size:14.5px;color:var(--texte-doux);margin-bottom:14px}
+.modale-boite .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+.modale-boite h5{font-size:14px;font-weight:800;margin-bottom:8px}
+.liste-points{display:flex;flex-direction:column;gap:7px;margin-bottom:16px}
+.liste-points li{font-size:13.5px;display:flex;gap:8px;align-items:flex-start}
+.liste-points li::before{content:"✓";color:var(--jaune-fonce);font-weight:800}
+.actions-modale{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.actions-modale .btn{flex:1;min-width:160px}
+
+/* Résultats questionnaire (RF3) */
+.reco-carte{border:2px solid transparent;border-radius:18px}
+.reco-carte.top1{border-color:var(--jaune)}
+.reco-rang{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:800;color:var(--texte-doux);margin-bottom:10px}
+.reco-rang.top1{color:var(--jaune-fonce)}
+
+
+
+
+/* ====================== LOGO IMAGE PNG ====================== */
+.logo-altoneo { display:flex; align-items:center; cursor:pointer; text-decoration:none; }
+.logo-img { display:block; height:38px; width:auto; object-fit:contain; }
+.logo-img-footer { height:38px; }
+
+/* ====================== DÉCORS VAGUES EN COINS (charte Altonéo) ======================
+   Demi-vague bleue : coin haut-gauche
+   Vague jaune      : coin bas-droite
+   Taille contenue, ne font pas toute la longueur de la page.
+   ============================================================================ */
+
+/* ---- Conteneur global pour positionner les vagues par rapport au document ---- */
+.page-wrapper {
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.deco-coin-hg {
+  position: absolute;
+  top: 62px;        /* juste sous le header */
+  left: -18px;
+  width: 300px;
+  height: 150px;
+  pointer-events: none;
+  z-index: 0;       /* arrière-plan, derrière tout le contenu */
+  opacity: 0.55;
+}
+.deco-coin-hg svg {
+  width: 100%;
+  height: 100%;
+}
+
+.deco-coin-bd {
+  position: absolute;
+  bottom: 220px;
+  right: -18px;
+  width: 280px;
+  height: 140px;
+  pointer-events: none;
+  z-index: 0;       /* arrière-plan, derrière tout le contenu */
+  opacity: 0.55;
+}
+.deco-coin-bd svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ====================== TUILE 3 — QUESTIONNAIRE DE QUALIFICATION ====================== */
+.fil-reponses{
+  display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px;
+}
+.fil-reponses .puce{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--surface);border:1px solid var(--bordure);
+  color:var(--texte-doux);font-weight:700;font-size:12.5px;
+  padding:7px 13px;border-radius:20px;box-shadow:var(--ombre);
+}
+.fil-reponses .puce.secteur{background:var(--bleu);color:#fff;border-color:var(--bleu)}
+.fil-reponses .puce .fl{color:var(--jaune-fonce);font-weight:800}
+
+.carte-question{
+  position:relative;overflow:hidden;
+  background:var(--surface);border:1px solid var(--bordure);border-radius:22px;
+  padding:36px 32px;box-shadow:var(--ombre);max-width:760px;margin:0 auto 30px;
+  text-align:center;
+}
+.carte-question .etiquette{
+  display:inline-block;background:rgba(249,178,51,.16);color:var(--jaune-fonce);
+  font-weight:800;font-size:11.5px;letter-spacing:.5px;text-transform:uppercase;
+  padding:5px 13px;border-radius:20px;margin-bottom:16px;
+}
+.carte-question h2{font-size:24px;font-weight:800;color:var(--texte);margin-bottom:6px;line-height:1.3}
+.carte-question p.aide{font-size:13.5px;color:var(--texte-doux);margin-top:8px}
+
+.choix-binaire{display:flex;gap:16px;justify-content:center;margin-top:28px;flex-wrap:wrap}
+.choix-binaire .choix{
+  flex:1;min-width:170px;max-width:230px;
+  background:var(--surface-2);border:1.5px solid var(--bordure);border-radius:16px;
+  padding:20px 16px;cursor:pointer;text-decoration:none;color:var(--texte);
+  font-weight:800;font-size:15px;transition:.2s;display:flex;flex-direction:column;align-items:center;gap:8px;
+}
+.choix-binaire .choix .ico{font-size:24px}
+.choix-binaire .choix:hover{transform:translateY(-3px);box-shadow:var(--ombre-hover)}
+.choix-binaire .choix.oui:hover{border-color:var(--vert);background:rgba(22,173,146,.08);color:var(--vert)}
+.choix-binaire .choix.non:hover{border-color:var(--rose);background:rgba(232,58,93,.08);color:var(--rose)}
+.choix-binaire .choix.opt:hover{border-color:var(--bleu-clair);background:rgba(45,81,159,.08);color:var(--bleu-clair)}
+
+/* Sélecteur de secteur (mini-tuiles) */
+.mini-tuiles{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));max-width:980px;margin:0 auto}
+.mini-tuile{
+  position:relative;overflow:hidden;
+  background:var(--surface);border:1px solid var(--bordure);border-radius:18px;
+  padding:22px 18px;text-align:center;text-decoration:none;color:var(--texte);
+  box-shadow:var(--ombre);transition:.22s;display:flex;flex-direction:column;align-items:center;gap:9px;
+}
+.mini-tuile:hover{transform:translateY(-4px);box-shadow:var(--ombre-hover);border-color:var(--jaune)}
+.mini-tuile .ico{font-size:30px}
+.mini-tuile h4{font-size:15px;font-weight:800}
+.mini-tuile .dispo{font-size:11px;font-weight:700;color:var(--vert)}
+.mini-tuile.bientot{opacity:.55;cursor:not-allowed;pointer-events:none}
+.mini-tuile.bientot .dispo{color:var(--texte-doux)}
+
+/* Résultat final qualification */
+.carte-resultat{
+  position:relative;overflow:hidden;
+  background:linear-gradient(125deg,var(--bleu),var(--bleu-clair));color:#fff;
+  border-radius:24px;padding:42px 34px;text-align:center;max-width:680px;margin:0 auto 30px;
+  box-shadow:var(--ombre-hover);
+}
+.carte-resultat .etiquette{
+  display:inline-block;background:rgba(255,255,255,.16);color:#fff;
+  font-weight:800;font-size:11.5px;letter-spacing:.5px;text-transform:uppercase;
+  padding:5px 13px;border-radius:20px;margin-bottom:16px;
+}
+.carte-resultat .outil-encadre{
+  display:inline-block;background:#fff;color:var(--bleu);
+  font-size:30px;font-weight:800;padding:18px 34px;border-radius:18px;
+  border:3px solid var(--jaune);margin:14px 0 18px;box-shadow:0 10px 26px rgba(0,0,0,.18);
+}
+.carte-resultat p.aide{font-size:13.5px;color:rgba(255,255,255,.8);max-width:480px;margin:0 auto}
+.carte-resultat .actions-resultat{display:flex;gap:12px;justify-content:center;margin-top:24px;flex-wrap:wrap}

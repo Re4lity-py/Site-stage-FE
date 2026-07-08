@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ALTONÉO · Administration — Éditeur → Plateforme Agréée</title>
+<link rel="stylesheet" href="/styles.css">
+<link rel="stylesheet" href="/tuile_2/module2.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,600&display=swap">
+</head>
+<body>
+<!-- Décors de marque Altonéo -->
+<div class="deco-coin-hg" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 100" fill="none">
+    <path d="M14 45 C92 20 142 35 192 75"
+          stroke="#1b274c" stroke-width="18" stroke-linecap="round"/>
+  </svg>
+</div>
+<div class="deco-coin-bd" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100" fill="none">
+    <path d="M12 55 C90 80 140 65 190 25"
+          stroke="#f8b132" stroke-width="16" stroke-linecap="round"/>
+  </svg>
+</div>
+
+<header>
+  <a class="logo-altoneo" href="/" title="ALTONÉO — Accueil">
+    <img src="../images/logo-altoneo.png" alt="Altonéo" class="logo-img" height="38">
+  </a>
+  <div class="header-spacer"></div>
+  <nav class="nav-principale">
+    <a href="/">Accueil</a>
+    <a href="/tuile_2/admin.html" class="actif">⚙️ Administration</a>
+    <a href="/tuile_2/index.html" target="_blank">Retour</a>
+  </nav>
+</header>
+
+<nav class="nav-mobile">
+  <a href="/">Accueil</a>
+  <a href="/tuile_2/admin.html" class="actif">⚙️ Administration</a>
+  <a href="/tuile_2/index.html" target="_blank">Retour</a>
+</nav>
+
+<main>
+  <div class="fil"><a href="/">Accueil</a><span class="sep">/</span><a href="/tuile_2/">Éditeur → Plateforme Agréée</a><span class="sep">/</span><span>Administration</span></div>
+  <div class="bandeau-module m2">
+    <svg class="deco-sinusoide deco" viewBox="0 0 200 100" preserveAspectRatio="none" aria-hidden="true"><path d="M210 0 C160 30 180 70 130 78 C80 86 90 100 40 100 L210 100 Z" fill="currentColor"/></svg>
+    <div class="b-ico">⚙️</div>
+    <div>
+      <h2>Administration — PA / SC</h2>
+      <p>Gérez les correspondances Éditeur / Solution Compatible → Plateforme Agréée.</p>
+    </div>
+  </div>
+
+  <!-- ============ TABLE DES CORRESPONDANCES ============ -->
+  <div class="carte">
+    <div class="barre-admin">
+      <h4 style="margin-bottom:0">📋 Correspondances enregistrées (<span id="nb-pa">0</span>)</h4>
+      <button class="btn btn-jaune" onclick="ouvrirModale()">＋ Ajouter une correspondance</button>
+    </div>
+    <div id="zone-table">
+      <div class="chargement">Chargement des données…</div>
+    </div>
+  </div>
+
+  <!-- ============ IMPORT EXCEL ============ -->
+  <div class="carte">
+    <h4>📥 Import par fichier Excel</h4>
+    <p style="font-size:13.5px;color:var(--texte-doux);margin-bottom:12px">
+      Importez en masse des éditeurs/PA. Le fichier doit comporter 3 colonnes, dans cet ordre :
+      <b>PA</b>, <b>SC</b>, <b>Éditeur</b>. Seule la colonne <b>PA</b> est obligatoire — si <b>SC</b> ou
+      <b>Éditeur</b> est vide sur une ligne, celle-ci est importée quand même (aucune erreur).
+    </p>
+    <div class="grille-form" style="margin-bottom:10px">
+      <div>
+        <label class="lbl">Mode d'import</label>
+        <select class="select" id="mode-import">
+          <option value="fusion">Fusionner — met à jour les lignes existantes (même PA + même SC), ajoute les nouvelles</option>
+          <option value="remplacer">Remplacer — vide la base puis importe le fichier</option>
+        </select>
+      </div>
+    </div>
+    <div class="import-zone">
+      <input type="file" id="fichier-excel" accept=".xlsx,.xls,.csv" style="display:none" onchange="importerExcel(event)">
+      <button class="btn btn-bleu" onclick="document.getElementById('fichier-excel').click()">📂 Choisir un fichier Excel</button>
+      <button class="btn btn-ligne" onclick="telechargerModele()">⬇️ Télécharger le modèle</button>
+      <span id="import-info" style="font-size:13px;font-weight:700"></span>
+    </div>
+    <div class="note">💾 Les données sont enregistrées sur le serveur (fichier <code>data/db.json</code>), donc partagées par tous les collaborateurs qui accèdent à cet outil.</div>
+  </div>
+
+  <div id="statut-global" class="bandeau-statut"></div>
+</main>
+
+<footer class="footer-altoneo">
+  <svg class="footer-vague deco" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,30 C180,60 360,0 540,24 C720,48 900,0 1080,26 C1260,52 1350,18 1440,30 L1440,60 L0,60 Z" fill="currentColor"/>
+  </svg>
+  <div class="footer-inner">
+    <div class="footer-marque">
+      <img src="../images/logo-altoneo-footer_2.png" alt="Altonéo" class="logo-img logo-img-footer" height="38">
+    </div>
+    <div class="footer-texte">Outil interne · Éditeur → Plateforme Agréée &nbsp;·&nbsp; <span class="pill-v">Création : IT Solutions</span></div>
+  </div>
+</footer>
+
+<!-- ============ MODALE Ajout / Modification ============ -->
+<div class="modale-fond" id="modale-fond">
+  <div class="modale-boite">
+    <button class="modale-fermer" onclick="fermerModale()">✕</button>
+    <h3 id="modale-titre">Ajouter une correspondance</h3>
+    <form id="form-corr" onsubmit="return enregistrerCorrespondance(event)">
+      <div class="grille-form">
+        <div>
+          <label class="lbl">Plateforme Agréée (PA) *</label>
+          <input class="input" id="f-pa" required placeholder="ex. Pennylane, SERES, IOPOLE…">
+        </div>
+        <div>
+          <label class="lbl">SC / Solution (logiciel du client) *</label>
+          <input class="input" id="f-sc" required placeholder="ex. Henrri, MEG, Sage 100…">
+        </div>
+        <div>
+          <label class="lbl">Éditeur / Groupe</label>
+          <input class="input" id="f-editeur" placeholder="ex. Rivalis / Henrri">
+        </div>
+      </div>
+      <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap">
+        <button type="submit" class="btn btn-jaune">＋ Enregistrer</button>
+        <button type="button" class="btn btn-ligne" onclick="fermerModale()">Annuler</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+/* ===========================================================
+   ALTONÉO — Page Administration PA/SC
+   =========================================================== */
+
+const API = '/api/correspondances';
+let DONNEES = [];
+let EDITION_ID = null;
+
+function afficherStatutGlobal(type, msg){
+  const el = document.getElementById('statut-global');
+  el.className = 'bandeau-statut on ' + type;
+  el.textContent = msg;
+  clearTimeout(window._tStatut);
+  window._tStatut = setTimeout(() => el.classList.remove('on'), 6000);
+}
+
+async function chargerDonnees(){
+  try{
+    const res = await fetch(API);
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    DONNEES = await res.json();
+  }catch(e){
+    afficherStatutGlobal('erreur', '❌ Impossible de joindre le serveur (' + e.message + '). Vérifiez que "node server.js" est bien démarré.');
+    DONNEES = [];
+  }
+  rafraichirTableAdmin();
+  document.getElementById('nb-pa').textContent = DONNEES.length;
+}
+
+function badgeConfiance(niveau){
+  const n = (niveau || '').toLowerCase();
+  let classe = 'tag';
+  if(n.startsWith('élev') || n.startsWith('elev')) classe += ' niv-eleve';
+  else if(n.startsWith('moyen')) classe += ' niv-moyen';
+  else if(n.startsWith('faible')) classe += ' niv-faible';
+  return '<span class="' + classe + '">' + escapeHtml(niveau) + '</span>';
+}
+
+function rafraichirTableAdmin(){
+  const zone = document.getElementById('zone-table');
+  if(DONNEES.length === 0){
+    zone.innerHTML = '<p style="color:var(--texte-doux);font-size:13.5px">Aucune correspondance enregistrée. Ajoutez-en une ou importez un fichier Excel.</p>';
+    return;
+  }
+  const lignes = DONNEES.slice().sort((a,b) => (a.pa+a.sc).localeCompare(b.pa+b.sc));
+  zone.innerHTML = `
+    <table class="tbl-admin">
+      <thead><tr><th>PA</th><th>SC / Solution</th><th>Éditeur</th><th></th></tr></thead>
+      <tbody>
+        ${lignes.map(d => `
+          <tr>
+            <td><b>${escapeHtml(d.pa)}</b></td>
+            <td>${escapeHtml(d.sc)}</td>
+            <td>${escapeHtml(d.editeur || '—')}</td>
+            <td class="actions-ligne">
+              <button class="edit" title="Modifier" onclick="ouvrirModale(${d.id})">✎</button>
+              <button class="del" title="Supprimer" onclick="supprimerCorrespondance(${d.id})">✕</button>
+            </td>
+          </tr>`).join('')}
+      </tbody>
+    </table>`;
+  document.getElementById('nb-pa').textContent = DONNEES.length;
+}
+
+function ouvrirModale(id){
+  EDITION_ID = id || null;
+  const champs = ['pa','sc','editeur'];
+  if(id){
+    const d = DONNEES.find(x => x.id === id);
+    document.getElementById('modale-titre').textContent = 'Modifier la correspondance';
+    champs.forEach(c => { document.getElementById('f-' + c).value = d[c] || ''; });
+  } else {
+    document.getElementById('modale-titre').textContent = 'Ajouter une correspondance';
+    document.getElementById('form-corr').reset();
+  }
+  document.getElementById('modale-fond').classList.add('on');
+}
+
+function fermerModale(){
+  document.getElementById('modale-fond').classList.remove('on');
+  EDITION_ID = null;
+}
+
+async function enregistrerCorrespondance(ev){
+  ev.preventDefault();
+  const corps = {
+    pa: document.getElementById('f-pa').value.trim(),
+    sc: document.getElementById('f-sc').value.trim(),
+    editeur: document.getElementById('f-editeur').value.trim()
+  };
+  try{
+    const url = EDITION_ID ? (API + '/' + EDITION_ID) : API;
+    const methode = EDITION_ID ? 'PUT' : 'POST';
+    const res = await fetch(url, { method: methode, headers: {'Content-Type':'application/json'}, body: JSON.stringify(corps) });
+    const data = await res.json();
+    if(!res.ok) throw new Error(data.erreur || ('HTTP ' + res.status));
+    fermerModale();
+    await chargerDonnees();
+    afficherStatutGlobal('succes', '✅ Correspondance enregistrée.');
+  }catch(e){
+    alert('Erreur : ' + e.message);
+  }
+  return false;
+}
+
+async function supprimerCorrespondance(id){
+  const d = DONNEES.find(x => x.id === id);
+  if(!confirm('Supprimer la correspondance « ' + (d ? d.sc : id) + ' » ?')) return;
+  try{
+    const res = await fetch(API + '/' + id, { method: 'DELETE' });
+    if(!res.ok){ const data = await res.json(); throw new Error(data.erreur || ('HTTP ' + res.status)); }
+    await chargerDonnees();
+    afficherStatutGlobal('succes', '🗑️ Correspondance supprimée.');
+  }catch(e){
+    alert('Erreur : ' + e.message);
+  }
+}
+
+function importerExcel(ev){
+  const f = ev.target.files[0];
+  if(!f) return;
+  const info = document.getElementById('import-info');
+  const mode = document.getElementById('mode-import').value;
+  const reader = new FileReader();
+  reader.onload = async function(e){
+    try{
+      const wb = XLSX.read(new Uint8Array(e.target.result), { type: 'array' });
+      const nomFeuille = wb.SheetNames.find(n => /cartographie/i.test(n)) || wb.SheetNames[0];
+      const ws = wb.Sheets[nomFeuille];
+      const lignes = XLSX.utils.sheet_to_json(ws, { defval: '' });
+      if(lignes.length === 0){ info.textContent = '⚠️ Le fichier ne contient aucune ligne de données.'; info.style.color = 'var(--rose)'; ev.target.value = ''; return; }
+      const res = await fetch('/api/import', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ lignes, mode }) });
+      const data = await res.json();
+      if(!res.ok) throw new Error(data.erreur || ('HTTP ' + res.status));
+      info.textContent = `✅ ${data.ajoutees} ajoutée(s), ${data.miseAjour} mise(s) à jour` +
+        (data.ignorees ? `, ${data.ignorees} ignorée(s)` : '') + ` — total : ${data.total}.`;
+      info.style.color = 'var(--vert)';
+      await chargerDonnees();
+    }catch(err){
+      info.textContent = '❌ ' + err.message;
+      info.style.color = 'var(--rose)';
+    }
+    ev.target.value = '';
+  };
+  reader.readAsArrayBuffer(f);
+}
+
+function telechargerModele(){
+  const donnees = [
+    { 'PA':'Pennylane', 'SC':'Nom du logiciel', 'Éditeur':'Nom de l\'éditeur' },
+    { 'PA':'Pennylane', 'SC':'', 'Éditeur':'Pennylane' }
+  ];
+  const ws = XLSX.utils.json_to_sheet(donnees);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'PA-SC-Editeur');
+  XLSX.writeFile(wb, 'modele-import-PA-SC.xlsx');
+}
+
+function escapeHtml(s){
+  return String(s == null ? '' : s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+chargerDonnees();
+</script>
+</body>
+</html>

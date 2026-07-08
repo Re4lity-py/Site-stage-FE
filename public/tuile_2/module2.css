@@ -1,0 +1,114 @@
+/* ===========================================================
+   Styles complémentaires — Module "Éditeur/SC → Plateforme Agréée"
+   (n'altère pas styles.css fourni ; vient le compléter)
+   =========================================================== */
+
+.resultat-pa{
+  margin-top:20px;padding:24px;border-radius:16px;
+  background:linear-gradient(120deg,rgba(45,81,159,.10),rgba(249,178,51,.10));
+  border:1px solid var(--bordure);display:none;
+}
+.resultat-pa.on{display:block;animation:fade .3s}
+.resultat-pa .label{font-size:12px;font-weight:700;color:var(--texte-doux);text-transform:uppercase;letter-spacing:.6px}
+.resultat-pa .pa{font-size:27px;font-weight:800;color:var(--jaune-fonce);margin-top:4px;margin-bottom:6px}
+.resultat-pa .sous-ligne{font-size:13.5px;color:var(--texte-doux);font-weight:600}
+.resultat-pa{position:relative;overflow:hidden}
+.resultat-pa .losange-deco{position:absolute;top:20px;right:20px;width:13px;height:13px;color:var(--bleu-clair)}
+
+.tag.niv-eleve{color:var(--vert);background:rgba(22,173,146,.14)}
+.tag.niv-moyen{color:var(--jaune-fonce);background:rgba(249,178,51,.16)}
+.tag.niv-faible{color:var(--rose);background:rgba(232,58,93,.14)}
+
+.barre-admin{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+.barre-admin .compteur{font-size:13px;color:var(--texte-doux)}
+.barre-admin .compteur b{color:var(--texte)}
+
+table.tbl-admin{table-layout:fixed;margin-left:auto;margin-right:auto;width:auto;min-width:520px;max-width:800px}
+table.tbl-admin th:nth-child(1),table.tbl-admin td:nth-child(1){width:200px}
+table.tbl-admin th:nth-child(2),table.tbl-admin td:nth-child(2){width:220px}
+table.tbl-admin th:nth-child(3),table.tbl-admin td:nth-child(3){width:200px}
+table.tbl-admin th:nth-child(4),table.tbl-admin td:nth-child(4){width:80px;text-align:right}
+table.tbl-admin th:nth-child(5),table.tbl-admin td:nth-child(5){display:none}
+table.tbl-admin th:nth-child(6),table.tbl-admin td:nth-child(6){display:none}
+table.tbl-admin td{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.actions-ligne{display:flex;gap:8px;justify-content:flex-end}
+.actions-ligne button{cursor:pointer;border:none;background:none;font-size:14px;padding:4px 6px;border-radius:6px}
+.actions-ligne .edit:hover{background:rgba(45,81,159,.14)}
+.actions-ligne .del:hover{background:rgba(232,58,93,.14)}
+
+.modale-boite form .grille-form{margin-bottom:4px}
+.modale-boite textarea.input{resize:vertical;min-height:64px;font-family:inherit}
+.modale-boite .pleine-largeur{grid-column:1/-1}
+
+.bandeau-statut{
+  display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700;padding:11px 15px;
+  border-radius:11px;margin-top:6px;display:none;
+}
+.bandeau-statut.on{display:flex;animation:fade .25s}
+.bandeau-statut.succes{background:rgba(22,173,146,.14);color:var(--vert)}
+.bandeau-statut.erreur{background:rgba(232,58,93,.14);color:var(--rose)}
+
+.chargement{padding:30px;text-align:center;color:var(--texte-doux);font-size:13.5px}
+
+@media(max-width:760px){
+  table.tbl-admin{table-layout:auto}
+  table.tbl-admin td{white-space:normal}
+}
+
+/* ====================== MENU DÉROULANT PLEINE LARGEUR — LISTE DES CORRESPONDANCES ====================== */
+.selecteur-correspondance{position:relative;margin-top:6px}
+
+.select-corr-btn{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  width:100%;padding:13px 16px;border-radius:11px;
+  border:1.5px solid var(--bordure);background:var(--surface-2);
+  color:var(--texte-doux);font-size:14.5px;font-weight:700;font-family:inherit;
+  cursor:pointer;transition:.2s;text-align:left;
+}
+.select-corr-btn span#select-corr-label{
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.select-corr-btn.rempli{color:var(--texte)}
+.select-corr-btn:hover{border-color:var(--jaune)}
+.select-corr-btn.ouvert{border-color:var(--jaune);background:var(--surface)}
+.select-corr-btn .dropdown-chevron{flex:0 0 auto;transition:transform .2s}
+.select-corr-btn.ouvert .dropdown-chevron{transform:rotate(180deg)}
+
+.liste-corr-panel{
+  display:none;
+  position:absolute;top:calc(100% + 8px);left:0;right:0;
+  background:var(--surface);
+  border:1.5px solid var(--bordure);
+  border-radius:14px;
+  box-shadow:var(--ombre-hover);
+  z-index:100;
+  overflow:hidden;
+}
+.liste-corr-panel.ouvert{display:block;animation:fade .15s}
+
+.liste-corr-recherche{padding:12px;border-bottom:1px solid var(--bordure)}
+.liste-corr-recherche .input{margin:0}
+
+.liste-corr-entete{
+  display:grid;grid-template-columns:1fr;gap:10px;
+  padding:9px 16px;background:var(--surface-2);
+  border-bottom:1px solid var(--bordure);
+  font-size:11px;font-weight:800;color:var(--texte-doux);
+  text-transform:uppercase;letter-spacing:.4px;
+}
+
+.liste-corr-lignes{max-height:320px;overflow-y:auto}
+.liste-corr-ligne{
+  display:grid;grid-template-columns:1fr;gap:10px;align-items:center;
+  padding:13px 16px;cursor:pointer;
+  border-bottom:1px solid var(--bordure);transition:.15s;
+}
+.liste-corr-ligne:last-child{border-bottom:none}
+.liste-corr-ligne:hover{background:var(--surface-2)}
+.liste-corr-ligne span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14px}
+.liste-corr-ligne .lc-editeur{font-weight:700;color:var(--texte)}
+.liste-corr-vide{padding:20px 16px;color:var(--texte-doux);font-size:13.5px;text-align:center}
+
+@media(max-width:680px){
+  .liste-corr-ligne{padding:12px 16px}
+}

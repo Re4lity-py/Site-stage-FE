@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ALTONÉO · Éditeur → Plateforme Agréée</title>
+<link rel="stylesheet" href="/styles.css">
+<link rel="stylesheet" href="/tuile_2/module2.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,600&display=swap">
+</head>
+<body>
+<!-- Décors de marque Altonéo -->
+<div class="deco-coin-hg" aria-hidden="true">
+  <!-- Demi-vague bleue, coin haut-gauche : miroir vertical de la jaune -->
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 100" fill="none">
+    <path d="M14 45 C92 20 142 35 192 75"
+          stroke="#1b274c" stroke-width="18" stroke-linecap="round"/>
+  </svg>
+</div>
+<div class="deco-coin-bd" aria-hidden="true">
+  <!-- Vague jaune, coin bas-droite : une seule demi-onde, trait plein -->
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100" fill="none">
+    <path d="M12 55 C90 80 140 65 190 25"
+          stroke="#f8b132" stroke-width="16" stroke-linecap="round"/>
+  </svg>
+</div>
+
+
+
+
+
+<header>
+  <a class="logo-altoneo" href="/" title="ALTONÉO — Accueil">
+    <img src="../images/logo-altoneo.png" alt="Altonéo" class="logo-img" height="38">
+  </a>
+  <div class="header-spacer"></div>
+  <nav class="nav-principale">
+    <a href="/">Accueil</a>
+    <a href="/tuile_2/admin.html" id="nav-admin-link">⚙️ Administration</a>
+  </nav>
+</header>
+
+<nav class="nav-mobile">
+  <a href="/">Accueil</a>
+  <a href="/tuile_2/admin.html">⚙️ Administration</a>
+</nav>
+
+<main>
+  <div class="fil"><a href="/">Accueil</a><span class="sep">/</span><span>Annuaire des PA</span></div>
+  <div class="bandeau-module m2">
+    <svg class="deco-sinusoide deco" viewBox="0 0 200 100" preserveAspectRatio="none" aria-hidden="true"><path d="M210 0 C160 30 180 70 130 78 C80 86 90 100 40 100 L210 100 Z" fill="currentColor"/></svg>
+    <div class="b-ico">🔗</div>
+    <div>
+      <h2>Annuaire des PA</h2>
+      <p>Recherche de PA par la SC et du SC par la PA</p>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab actif" id="tab-sc-vers-pa" onclick="ongletSens('sc-vers-pa')">🔎 SC/Éditeur → PA</div>
+    <div class="tab" id="tab-pa-vers-sc" onclick="ongletSens('pa-vers-sc')">🔁 PA → SC/Éditeur</div>
+  </div>
+
+  <!-- ============ CONSULTATION : SC/Éditeur → PA ============ -->
+  <div id="pa-conseil" class="sous-ecran actif">
+    <div class="carte">
+      <h4>🔎 Quelle est la solution compatible ?</h4>
+      <label class="lbl">Solution compatible du client</label>
+      <div class="selecteur-correspondance">
+        <button class="select-corr-btn" id="select-corr-btn" onclick="toggleListeCorrespondances()" type="button">
+          <span id="select-corr-label">Sélectionner une solution compatible</span>
+          <span class="dropdown-chevron">▾</span>
+        </button>
+        <div class="liste-corr-panel" id="liste-corr-panel">
+          <div class="liste-corr-recherche">
+            <input class="input" id="filtre-corr" placeholder="Filtrer par éditeur…" autocomplete="off" oninput="filtrerListeCorrespondances()">
+          </div>
+          <div class="liste-corr-entete">
+            <span>Solution Compatible</span>
+          </div>
+          <div class="liste-corr-lignes" id="liste-corr-lignes"></div>
+        </div>
+      </div>
+
+      <div class="resultat-pa" id="res-pa">
+        <svg class="losange-deco deco" viewBox="0 0 20 20" aria-hidden="true"><rect x="3" y="3" width="14" height="14" rx="3" transform="rotate(45 10 10)" fill="currentColor"/></svg>
+        <div class="label">Plateforme Agréée associée</div>
+        <div class="pa" id="res-pa-nom">—</div>
+        <div class="sous-ligne" id="res-sousligne">Via partenaire agréé · Éditeur : —</div>
+      </div>
+      <div class="note">💡 Les rattachements affichés ici sont basés sur les informations publiques disponibles côté éditeurs. Ils doivent être confirmés contractuellement avant tout mandat client.</div>
+    </div>
+  </div>
+
+  <!-- ============ CONSULTATION : PA → SC/Éditeur ============ -->
+  <div id="pa-vers-sc" class="sous-ecran">
+    <div class="carte">
+      <h4>🔁 Quelle est la Plateforme Agréée ?</h4>
+      <label class="lbl">Plateforme Agréée du client</label>
+      <div class="selecteur-correspondance">
+        <button class="select-corr-btn" id="select-pa-btn" onclick="toggleListePA()" type="button">
+          <span id="select-pa-label">Sélectionner une Plateforme Agréée</span>
+          <span class="dropdown-chevron">▾</span>
+        </button>
+        <div class="liste-corr-panel" id="liste-pa-panel">
+          <div class="liste-corr-recherche">
+            <input class="input" id="filtre-pa" placeholder="Filtrer par plateforme…" autocomplete="off" oninput="filtrerListePA()">
+          </div>
+          <div class="liste-corr-entete">
+            <span>Plateforme Agréée</span>
+          </div>
+          <div class="liste-corr-lignes" id="liste-pa-lignes"></div>
+        </div>
+      </div>
+
+      <div class="resultat-pa" id="res-sc-liste">
+        <svg class="losange-deco deco" viewBox="0 0 20 20" aria-hidden="true"><rect x="3" y="3" width="14" height="14" rx="3" transform="rotate(45 10 10)" fill="currentColor"/></svg>
+        <div class="label">Solutions Compatibles associées</div>
+        <div id="res-sc-lignes"></div>
+      </div>
+      <div class="note">💡 Les rattachements affichés ici sont basés sur les informations publiques disponibles côté éditeurs. Ils doivent être confirmés contractuellement avant tout mandat client.</div>
+    </div>
+  </div>
+
+  <div id="statut-global" class="bandeau-statut"></div>
+</main>
+
+<footer class="footer-altoneo">
+  <svg class="footer-vague deco" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,30 C180,60 360,0 540,24 C720,48 900,0 1080,26 C1260,52 1350,18 1440,30 L1440,60 L0,60 Z" fill="currentColor"/>
+  </svg>
+  <div class="footer-inner">
+    <div class="footer-marque">
+      <img src="../images/logo-altoneo-footer_2.png" alt="Altonéo" class="logo-img logo-img-footer" height="38">
+    </div>
+    <div class="footer-texte">Outil interne · Éditeur → Plateforme Agréée &nbsp;·&nbsp; <span class="pill-v">Création : IT Solutions</span></div>
+  </div>
+</footer>
+
+
+<script src="/tuile_2/app.js"></script>
+</body>
+</html>
